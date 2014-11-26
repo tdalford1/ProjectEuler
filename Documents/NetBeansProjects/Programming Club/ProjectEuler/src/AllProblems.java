@@ -24,6 +24,12 @@ public class AllProblems
         return sum;
     }
     
+    /**
+     * The method that actually figures out which
+     * of the million Collatz sequences is the longest.
+     * @return - the seed which gives the largest Collatz
+     * sequence from 1 to 1000000
+     */
     public static int largestCollatz()
     {
         int longestSeed = 1;
@@ -77,6 +83,14 @@ public class AllProblems
         return length;
     }
     
+    /**
+     * Recursive method that is used to find the length
+     * of a Collatz sequence. Makes use of several advanced
+     * programming topics, including recursion.
+     * @param sequence - the ArrayList where the numbers are stored
+     * @param seed - the original number
+     * @return - the length of the sequence
+     */
     public static int newCollatz(ArrayList<Integer> sequence, int seed)
     {
         sequence.add(seed);
