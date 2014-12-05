@@ -13,6 +13,10 @@ import java.util.ArrayList;
  */
 public class AllProblems 
 {
+    
+    /**
+     * Solved by Manu Singhal. Problem 1
+     **/
     public static int sumOfMult3and5()
     {
         int sum = 0;
