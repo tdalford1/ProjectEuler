@@ -132,6 +132,5 @@ public class AllProblems
         
         System.out.println(largestCollatz());
         System.out.println(newCollatz(new ArrayList<Integer>(), 910107));
-        // Imma change something
     }
 }
