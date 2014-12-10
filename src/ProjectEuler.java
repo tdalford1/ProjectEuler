@@ -41,8 +41,29 @@ public class ProjectEuler
         return difference;
     }
     
+    public static boolean isPrime(int num)
+    {
+        for(int i = 2; i <= (int)(Math.sqrt(num)); i ++)
+        {
+            if(num % i == 0)
+                return false;
+        }
+        return true;
+    }
+    
+    public static int problem10()
+    {
+        int sum = 0;
+        for(int i = 2; i < 2000000; i ++)
+        {
+            if(isPrime(i))
+                sum += i;
+        }
+        return sum;
+    }
+    
     public static void main(String[] args)
     {
-        System.out.println(problem6());
+        System.out.println(problem10());
     }
 }
