@@ -21,8 +21,28 @@ public class ProjectEuler
         return sum;
     }
     
+    public static int problem6()
+    {
+        int sumSquares = 0;
+        for(int i = 1; i < 101; i ++)
+        {
+            sumSquares += (i*i);
+        }
+        
+        int squareSum = 0;
+        for(int i = 1; i < 101; i ++)
+        {
+            squareSum += i;
+        }
+        squareSum = squareSum * squareSum;
+        
+        int difference = squareSum - sumSquares;
+        
+        return difference;
+    }
+    
     public static void main(String[] args)
     {
-        System.out.println(problem1());
+        System.out.println(problem6());
     }
 }
