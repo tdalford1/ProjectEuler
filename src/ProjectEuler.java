@@ -1,3 +1,6 @@
+
+import java.util.ArrayList;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -62,8 +65,40 @@ public class ProjectEuler
         return sum;
     }
     
+    public static int problem12()
+    {
+        boolean foundIt = false;
+        int highlyDivisible = 0;
+        int iteration = 1;
+        while(!foundIt)
+        {
+            int triNum = 0;
+            for(int i = 0; i <= iteration; i ++)
+                triNum += i;
+            
+            if(factorMe(triNum) > 500)
+            {
+                highlyDivisible = triNum;
+                foundIt = true;
+            }
+            iteration++;
+        }
+        return highlyDivisible;
+    }
+    
+    public static int factorMe(int i)
+    {
+        int numFactors = 0;
+        for(int j = 1; j <= i; j ++)
+        {
+            if(i % j == 0)
+                numFactors++;
+        }
+        return numFactors;
+    }
+    
     public static void main(String[] args)
     {
-        System.out.println(problem10());
+        System.out.println(factorMe(76576500));
     }
 }
