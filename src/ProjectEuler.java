@@ -1,5 +1,6 @@
 
 import java.util.ArrayList;
+import java.util.HashSet;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -97,8 +98,27 @@ public class ProjectEuler
         return numFactors;
     }
     
+    public static int problem29()
+    {
+        HashSet powers = new HashSet();
+        
+        for(int a = 2; a <= 100; a ++)
+        {
+            for(int b = 2; b <= 100; b ++)
+            {
+                double power = Math.pow(a, b);
+                powers.add(power);
+            }
+        }
+        
+        for(Object p : powers)
+            System.out.println(p);
+        
+        return powers.size();
+    }
+    
     public static void main(String[] args)
     {
-        System.out.println(factorMe(76576500));
+        System.out.println(problem29());
     }
 }
