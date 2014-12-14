@@ -25,7 +25,7 @@ public class ProjectEuler
         return sum;
     }
     
-    public static int problem3()
+    public static int problem5()
     {
         return (int) (Math.pow(2, 10) * Math.pow(3, 6) * Math.pow(4, 5) * Math.pow(5, 4) * Math.pow(6, 3) * Math.pow(7, 2) * Math.pow(8, 2) * Math.pow(9, 2) * 100 * 11 * 12 * 13 *14 * 15 * 16 * 17 * 18 * 19 * 20);
     }
@@ -124,6 +124,6 @@ public class ProjectEuler
     
     public static void main(String[] args)
     {
-        System.out.println(problem3());
+        System.out.println(problem5());
     }
 }
