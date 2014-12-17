@@ -9,8 +9,8 @@ import java.util.HashSet;
  */
 
 /**
- *
- * @author Simon Alford
+ * If you changed this file, add your name here
+ * @author Simon Alford, Manu Singhal
  */
  import java.math.*;
 
