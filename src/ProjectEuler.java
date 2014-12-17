@@ -1,37 +1,35 @@
 
-import java.util.ArrayList;
-import java.util.HashSet;
-
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
-/**
- * If you changed this file, add your name here
- * @author Simon Alford, Manu Singhal
- */
- import java.math.*;
-
+import java.math.*;
 import java.nio.file.*;
 import java.util.*;
 import java.io.IOException;
 import java.math.BigInteger;
-import java.util.*;
 
-/*
- * Howdy y'all. Here's most of the project euler code I've written.
- * Not all of these methods still work, and some never worked in the first place.
- * I started commenting but you get the idea:
- * -I write the solution to each problem in a static method called problemX()
- * -This way I can have a clumped up solution to each problem in the history that can be rerun any time
- * 		simply by inserting that method into the main method.
- * 		I've found this quite effective.
- * These are all of my methods. Sorry if there are duplicates with Manu's.
- * --Simon
- */	
-public class Euler2 
+/**
+ * Hi! This is the file that contains the solutions
+ * to a few of the Project Euler problems. The 
+ * problems can be found at projecteuler.net/problems.
+ * 
+ * Each question gets its own method, labelled as
+ * problemX(), where X is the number id of the problem
+ * on the Project Euler website. All methods are 
+ * static, so that they can be accessed without making
+ * a ProjectEuler object. Inside each method, you will
+ * see how we decided to solve it, hopefully with comments
+ * explaining why we did what we and why we didn't do what 
+ * we didn't. Above each method, hopefully, you will find a 
+ * javadoc explain what the problem hopes to solve and how 
+ * we went around doing it. As always, contact Manu S.
+ * (singhalmanu9 on GitHub) or visit the GitHub repository
+ * (www.github.com/DCHSProgrammingClub/ProjectEuler) if you have
+ * any questions, comments, or concerns. Thanks!
+ * 
+ * 
+ * If you changed this file, add your name here.
+ * @author Simon Alford, Manu Singhal
+ */
+
+public class ProjectEuler 
 {
 	
 	//Still working on this one, it's not quite working yet.
@@ -1019,6 +1017,17 @@ public class Euler2
 /*
 * Here are where Manu's methods start!
 */
+
+    /**
+     * Find the sum of all multiples of
+     * 3 or 5.
+     * I immediately thought of a for loop
+     * for this problem. Pretty easy, took
+     * about 5 minutes to write and test.
+     * 
+     * @return sum- the sum of multiples
+     * of 3 or 5
+     */
     public static int problem1()
     {
         int sum = 0;
@@ -1030,11 +1039,31 @@ public class Euler2
         return sum;
     }
     
+    /**
+     * ARGHHH THIS IS WRONG
+     * I'LL FIX THIS LATER
+     */
     public static int problem5()
     {
         return (int) (Math.pow(2, 10) * Math.pow(3, 6) * Math.pow(4, 5) * Math.pow(5, 4) * Math.pow(6, 3) * Math.pow(7, 2) * Math.pow(8, 2) * Math.pow(9, 2) * 100 * 11 * 12 * 13 *14 * 15 * 16 * 17 * 18 * 19 * 20);
     }
     
+    /**
+     * Find the difference of the sum of the
+     * squares of the first 100 integers and
+     * the square of the sum of the first 100
+     * integers.
+     * 
+     * Pretty straightforward. Use a for loop
+     * to sum all of the squares and another
+     * to sum the integers, then square it.
+     * One elementary operation is all that is
+     * needed to solve the problem.
+     * 
+     * @return difference - the difference
+     * of the square of the sums and the sum
+     * of the squares. 
+     */
     public static int problem6()
     {
         int sumSquares = 0;
@@ -1055,6 +1084,9 @@ public class Euler2
         return difference;
     }
     
+    /**
+     * Needed this for problem 10.
+     */
     public static boolean isPrime(int num)
     {
         for(int i = 2; i <= (int)(Math.sqrt(num)); i ++)
@@ -1065,6 +1097,17 @@ public class Euler2
         return true;
     }
     
+    /**
+     * Find the sum of the primes less than 
+     * two million. 
+     * 
+     * Pretty easy, use a for loop to find the
+     * primes less than 2,000,000 and sum them
+     * up.
+     * 
+     * @return sum - the sum of the primes less
+     * than two million
+     */
     public static int problem10()
     {
         int sum = 0;
@@ -1076,6 +1119,19 @@ public class Euler2
         return sum;
     }
     
+    /**
+     * Find the smallest triangular number
+     * that has over 500 factors. 
+     * 
+     * Firstly, find a triangular number. I did
+     * this using a while loop with a non-local 
+     * iterator. After that I used factorMe (below)
+     * to find the number of factors. Compare the 
+     * number of factors to 500, and exit the loop.
+     * 
+     * @return highlyDivisble - the smallest triangular
+     * number that has over 500 factors
+     */
     public static int problem12()
     {
         boolean foundIt = false;
@@ -1097,6 +1153,9 @@ public class Euler2
         return highlyDivisible;
     }
     
+    /**
+     * Used for problem 12 above.
+     */
     public static int factorMe(int i)
     {
         int numFactors = 0;
@@ -1108,6 +1167,16 @@ public class Euler2
         return numFactors;
     }
     
+    /**
+     * Find the amount of unique powers of
+     * a^b, where a and b are between 1000.
+     * 
+     * This one was screaming Set. Used the set
+     * and added the powers, no need to check
+     * if the power was already there because the
+     * HashSet already does that.
+     * 
+     */
     public static int problem29()
     {
         HashSet powers = new HashSet();
@@ -1121,8 +1190,9 @@ public class Euler2
             }
         }
         
-        for(Object p : powers)
-            System.out.println(p);
+        // Just for debugging
+        //for(Object p : powers)
+        //    System.out.println(p);
         
         return powers.size();
     }
