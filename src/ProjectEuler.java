@@ -133,14 +133,14 @@ public class ProjectEuler
 	static int numOfWays(ArrayList<Integer> coins, int sum)
 	{
 		int numOfWays = 0;
-		ArrayList<Integer> temp = coins;
+		ArrayList<Integer> tempArray = coins;
 		int i;
 		for(Integer temp: coins)
 		{
 			i = 1;
 			while(temp*i < sum)
 			{
-				numOfWays += numOfWays(temp, sum - temp*i);
+				numOfWays += numOfWays(tempArray, sum - temp*i);
 				i++;
 			}
 		}
@@ -415,20 +415,21 @@ public class ProjectEuler
 		System.out.println(count);
 	}
 	
+        // SIMON: REVISIT THIS
 	public static void problem22() throws IOException
 	{
 		String nameFile = "p022_names.txt";
 		String names = "";
 		
-		try{
-			
-			ReadFile file = new ReadFile(nameFile);
-			names = file.openFile()[0];
-			
-		}catch(IOException e)
-		{
-			System.out.println(e.getMessage() );
-		}
+//		try{ 
+//			
+//			ReadFile file = new ReadFile(nameFile);
+//			names = file.read();
+//			
+//		}catch(IOException e)
+//		{
+//			System.out.println(e.getMessage() );
+//		}
 		
 		names = names + ",end";
 		String[] seperatedNames = new String[5163];
@@ -794,64 +795,63 @@ public class ProjectEuler
 	
 	public static void problem14v3()
 	{
-		/*
-		 * go through numbers 1-1000000
-		 * go to next term in series.
-		 * add this term to the list
-		 * once you finally get to one, go through all of these numbers
-		 * if they are less than 1 million, add them to length array
-		 * for the first number, if it is greater than the max, make it the max
-		 * 
-		 * 
-		 * 
-		 * 
-		 */
-		long[] length = new long[1000000];
-		length[0] = 1;
+            int s = 0; // I HAVE NO IDEA WHAT THIS IS
+            
+            /*
+             * go through numbers 1-1000000
+             * go to next term in series.
+             * add this term to the list
+             * once you finally get to one, go through all of these numbers
+             * if they are less than 1 million, add them to length array
+             * for the first number, if it is greater than the max, make it the max
+             */
+            long[] length = new long[1000000];
+            length[0] = 1;
 		
-		ArrayList<Long> TO_ADD = new ArrayList<Long>(); //numbers who haven't been logged
-		long count;
-		long n;
-		int p;
-		long q;
-		int newLength;
-		int maxLength = 1;
-		int maxNum = 1;
-		for(long i = 2; i <= 1000000; i++)
+            ArrayList<Long> TO_ADD = new ArrayList<Long>(); //numbers who haven't been logged
+            long count;
+            long n;
+            int p = 0; // CHANGE THIS
+            long q;
+            int newLength;
+            int maxLength = 1;
+            int maxNum = 1;
+            for(long i = 2; i <= 1000000; i++)
+            {
+		n = i;
+		count = 0; //count shows position in the array.
+		TO_ADD.clear();
+		while(n > 1000000 || 0 == length[(int)n-1])
 		{
-			n = i;
-			count = 0; //count shows position in the array.
-			TO_ADD.clear();
-			while(n > 1000000 || 0 == length[(int)n-1])
-			{
-				TO_ADD.add(n);
-				count++;
-				if(0 == n%2)
-				{
-					n = n/2;
-				}else
-				{
-					n = 3*n + 1;
-				}			
-			}
-			// now n has been logged in length
-			for(int j = 0; j < s; j++)
-			{
-				q = TO_ADD.get(j);
-				if(q <= 1000000)
-				{
-					newLength = p + s - j;
-					length[(int)q-1] = newLength;
-					if(newLength > maxLength)
-					{
-						maxLength = newLength;
-						maxNum = (int)i;
-					}
-				}
-			}			
+                    TO_ADD.add(n);
+                    count++;
+                    if(0 == n%2)
+                    {
+                        n = n/2;
+                    }
+                    else
+                    {
+			n = 3*n + 1;
+                    }			
 		}
+		// now n has been logged in length
+		for(int j = 0; j < s; j++)
+		{
+                    q = TO_ADD.get(j);
+                    if(q <= 1000000)
+                    {
+			newLength = p + s - j;
+			length[(int)q-1] = newLength;
+			if(newLength > maxLength)
+			{
+                            maxLength = newLength;
+                            maxNum = (int)i;
+                	}
+                    }
+		}			
+            }
 		
-		System.out.println(maxLength + " " + maxNum);
+            System.out.println(maxLength + " " + maxNum);
 	}
 	
 	
@@ -1176,8 +1176,9 @@ public class ProjectEuler
      * if the power was already there because the
      * HashSet already does that.
      * 
+     * @return - the size of the Set of powers
      */
-    public static int problem29()
+    public static int problem29Manu()
     {
         HashSet powers = new HashSet();
         
