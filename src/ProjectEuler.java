@@ -1048,6 +1048,21 @@ public class ProjectEuler
         return (int) (Math.pow(2, 10) * Math.pow(3, 6) * Math.pow(4, 5) * Math.pow(5, 4) * Math.pow(6, 3) * Math.pow(7, 2) * Math.pow(8, 2) * Math.pow(9, 2) * 100 * 11 * 12 * 13 *14 * 15 * 16 * 17 * 18 * 19 * 20);
     }
     
+    public static int problem7()
+    {
+        int prime = 0;
+        int currentNumber = 2;
+        while(prime < 10001)
+        {
+            if(isPrime(currentNumber))
+                prime ++;
+            
+            currentNumber++;
+        }
+        
+        return currentNumber;
+    }
+    
     /**
      * Find the difference of the sum of the
      * squares of the first 100 integers and
@@ -1200,6 +1215,6 @@ public class ProjectEuler
     
     public static void main(String[] args)
     {
-        System.out.println(problem5());
+        System.out.println(problem7());
     }
 }
