@@ -48,7 +48,7 @@ import java.util.HashSet;
  * (www.github.com/DCHSProgrammingClub/ProjectEuler) if you have
  * any questions, comments, or concerns. Thanks!
  */
-public class Euler3 {
+public class ProjectEuler {
 
 	/**
      * Find the sum of all multiples of
