@@ -868,6 +868,40 @@ public class ProjectEuler {
 		System.out.println(totalSum);
 	}
     
+    /**
+     * @author Manu Singhal
+     * 
+     * This one is easier than it seems, create a
+     * super long String, then use substring to 
+     * get the digits you want & multiply them together.
+     * Couldn't get much easier, although it takes about
+     * a minute and a half to run.
+     * 
+     */
+    public static void problem40()
+    {
+        String constant = ".";
+        for(int i = 1; i < 200000; i ++)
+        {
+            constant += i + "";
+        }
+        int d1 = Integer.parseInt(constant.substring(1, 2));
+        System.out.println(d1);
+        int d10 = Integer.parseInt(constant.substring(10, 11));
+        System.out.println(d10);
+        int d100 = Integer.parseInt(constant.substring(100, 101));
+        System.out.println(d100);
+        int d1000 = Integer.parseInt(constant.substring(1000, 1001));
+        System.out.println(d1000);
+        int d10000 = Integer.parseInt(constant.substring(10000, 10001));
+        System.out.println(d10000);
+        int d100000 = Integer.parseInt(constant.substring(100000, 100001));
+        System.out.println(d100000);
+        int d1000000 = Integer.parseInt(constant.substring(1000000, 1000001));
+        System.out.println(d1000000);
+        
+        System.out.println(d1*d10*d100*d1000*d10000*d100000*d1000000);
+    }
     
     public static void main(String[] args)
     {
