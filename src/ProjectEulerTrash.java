@@ -11,7 +11,30 @@ import java.util.Arrays;
  */
 public class ProjectEulerTrash {
 	
-    /**
+	/**
+	 * I think this should work but it's too slow. I should do it faster�maybe even mathematically.
+     * @author Simon Alford
+     */
+    public static void problem40()
+    {
+    	System.out.println("starting");
+    	String num = "0.";
+    	for(Integer i = 0; i < 1000000; i++)
+    	{
+    		num+=String.valueOf(i);
+    	}
+    	int j = 1;
+    	int val = 1;//hi
+    	while(j <= 100000)
+    	{
+    		j = j*10;
+    		System.out.println(Integer.parseInt(num.substring(j+1, j + 2)));
+    		val = val*Integer.parseInt(num.substring(j+1, j + 2));
+    	}
+    	System.out.println(val);
+    }
+    
+	/**
      * @author Manu Singhal
      * ARGHHH THIS IS WRONG
      * I'LL FIX THIS LATER
