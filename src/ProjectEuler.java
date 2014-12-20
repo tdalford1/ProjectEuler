@@ -124,9 +124,6 @@ public class ProjectEuler {
      * One elementary operation is all that is
      * needed to solve the problem.
      * 
-     * @return difference - the difference
-     * of the square of the sums and the sum
-     * of the squares. 
      */
     public static void problem6()
     {
@@ -204,6 +201,7 @@ public class ProjectEuler {
     /**
      * @author Manu Singhal
      * Needed this for problem 10.
+     * @return - if the number is prime
      */
     public static boolean isPrime(int num)
     {
@@ -224,8 +222,6 @@ public class ProjectEuler {
      * primes less than 2,000,000 and sum them
      * up.
      * 
-     * @return sum - the sum of the primes less
-     * than two million
      */
     public static void problem10()
     {
@@ -821,7 +817,6 @@ public class ProjectEuler {
      * if the power was already there because the
      * HashSet already does that.
      * 
-     * @return - the size of the Set of powers
      */
     public static void problem29()
     {

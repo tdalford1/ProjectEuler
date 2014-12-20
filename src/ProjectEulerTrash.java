@@ -11,7 +11,7 @@ import java.util.Arrays;
  */
 public class ProjectEulerTrash {
 	
-	/**
+    /**
      * @author Manu Singhal
      * ARGHHH THIS IS WRONG
      * I'LL FIX THIS LATER
@@ -58,7 +58,7 @@ public class ProjectEulerTrash {
 		return numOfWays;
 	}	
 	
-	/**
+    /**
      * @author Manu Singhal
      * Find the smallest triangular number
      * that has over 500 factors. 
@@ -99,6 +99,8 @@ public class ProjectEulerTrash {
     /**
      * @author Manu Singhal
      * Used for problem 12 above.
+     * @return numFactors - the number of factors
+     * this thing has
      */
     public static int factorMe(int i)
     {
