@@ -41,7 +41,7 @@ import java.util.HashSet;
  * @author Simon Alford, Manu Singhal
  *
  * Problems completed:
- *  1, 4, 6, 7, 8, 10, 13, 14, 16, 19, 20, 21, 22, 23, 25, 26, 27, 28, 29, 30
+ *  1, 2, 4, 6, 7, 8, 10, 13, 14, 16, 19, 20, 21, 22, 23, 25, 26, 27, 28, 29, 30
  *  
  *  As always, contact Manu S.
  * (singhalmanu9 on GitHub) or visit the GitHub repository
@@ -68,6 +68,30 @@ public class ProjectEuler {
                 sum += i;
         }
         System.out.println(sum);
+    }
+    
+    /**
+     * @author Simon Alford
+     * Simple brute force solution.
+     * Go through fibanocci's under 4 million, and add them to the sum if they're even.
+     */
+    public static void problem2()
+    {
+    	int one = 1;
+    	int two = 1;
+    	int temp;
+    	long sum = 0;
+    	while(two < 4000000)
+    	{
+    		temp = two;
+    		two = two + one;
+    		one = temp;
+    		if(two % 2 == 0)
+    		{
+    			sum+=two;
+    		}
+    	}
+    	System.out.println(sum);
     }
     
     /**
