@@ -955,6 +955,44 @@ public class ProjectEuler {
 		System.out.println(totalSum);
 	}
     
+    /**
+     * @author Simon Alford
+     * This problem was pretty easy. Solved through brute force.
+     */
+    public static void problem32()
+	{
+		long i = 1, j = 1, sum = 0;
+		String eq = "", check = "123456789";
+		ArrayList<Long> solutions = new ArrayList<Long>();
+		while(i<9999)
+		{
+			i++;
+			j = 0;
+			do{
+				j++;
+				eq = Long.toString(i) + Long.toString(j) + Long.toString(i*j);
+				if(eq.length() == 9)
+				{
+					int k = 0;
+					boolean valid = true;
+					while(k < 9)
+					{	
+						if(!eq.contains(check.substring(k, k+1)))
+							valid = false;
+						k++;
+					}
+					if(valid == true && !solutions.contains(i*j))
+					{
+						System.out.println(i + "x" + j + "=" + i*j);
+						solutions.add(i*j);
+						sum+=i*j;
+					}
+				}
+			}while(eq.length() < 10);
+		}
+		System.out.println("Sum = " + sum);
+	}
+    
     
     public static void main(String[] args)
     {
