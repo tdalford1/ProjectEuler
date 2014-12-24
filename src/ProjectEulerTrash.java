@@ -102,12 +102,10 @@ public class ProjectEulerTrash {
     {
         boolean foundIt = false;
         int highlyDivisible = 0;
-        int iteration = 1;
+        int iteration = 500;
         while(!foundIt)
         {
-            int triNum = 0;
-            for(int i = 0; i <= iteration; i ++)
-                triNum += i;
+            int triNum = iteration * (iteration + 1) / 2;
             
             if(factorMe(triNum) > 500)
             {
@@ -237,6 +235,6 @@ public class ProjectEulerTrash {
 	
 	public static void main(String[] args)
 	{
-		
+            System.out.println(problem12());
 	}
 }
