@@ -41,7 +41,8 @@ import java.util.HashSet;
  * @author Simon Alford, Manu Singhal
  *
  * Problems completed:
- *  1, 2, 4, 6, 7, 8, 10, 11, 12*, 13, 14, 16, 19, 20, 21, 22, 23, 25, 26, 27, 28, 29, 30, 40*
+ *  1, 2, 4, 6, 7, 8, 10, 11, 12*, 13, 14, 16, 19, 20, 21, 22, 23, 25, 26, 27, 28, 29, 30,
+ *  36, 40*
  *  
  * (Problems with * are solved, but are very slow to execute)
  *  As always, contact Manu Singhal
