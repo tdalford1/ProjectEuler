@@ -42,7 +42,7 @@ import java.util.HashSet;
  *
  * Problems completed:
  *  1, 2, 4, 6, 7, 8, 10, 11, 12*, 13, 14, 16, 19, 20, 21, 22, 23, 25, 26, 27, 28, 29, 30,
- *  36, 40*
+ *  36, 40*, 52
  *  
  * (Problems with * are solved, but are very slow to execute)
  *  As always, contact Manu Singhal
@@ -1116,6 +1116,24 @@ public class ProjectEuler {
         System.out.println(d1000000);
         
         System.out.println(d1*d10*d100*d1000*d10000*d100000*d1000000);
+    }
+    
+    /**
+     * @author Manu Singhal
+     * 
+     * Find the smallest number x such that x, 2x, 3x,
+     * 4x, 5x, and 6x have the same digits in a different order.
+     * 
+     * Hehehehe... I know that 1/7 is .142857 repeating, and that
+     * 2/7, 3/7, 4/7, 5/7, and 6/7 have the same digits, so multiplying 
+     * by 10 gives 142857 as x. (I am assuming 0 doesn't count).
+     * 
+     * Even though this works, it is a cheat solution... I want to
+     * do this with a program
+     */
+    public static void problem52Cheat()
+    {
+        System.out.println(142857);
     }
     
     public static void main(String[] args)
