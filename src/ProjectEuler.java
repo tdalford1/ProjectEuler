@@ -42,7 +42,7 @@ import java.util.HashSet;
  *
  * Problems completed:
  *  1, 2, 4, 6, 7, 8, 10, 11, 12*, 13, 14, 16, 19, 20, 21, 22, 23, 25, 26, 27, 28, 29, 30,
- *  36, 40*, 52
+ *  36, 40*, 52, 53
  *  
  * (Problems with * are solved, but are very slow to execute)
  *  As always, contact Manu Singhal
@@ -1129,15 +1129,73 @@ public class ProjectEuler {
      * by 10 gives 142857 as x. (I am assuming 0 doesn't count).
      * 
      * Even though this works, it is a cheat solution... I want to
-     * do this with a program
+     * do this with a program.
      */
     public static void problem52Cheat()
     {
         System.out.println(142857);
     }
     
+    /**
+     * @author Manu Singhal
+     * 
+     * Find how many values of nCr, with n between
+     * 1 & 100, are greater than or equal to one million.
+     * 
+     * Brute forced this one... Used the nCr method
+     * below and just pushed it through. Surprisingly fast...
+     * 
+     */
+    public static void problem53()
+    {
+        int moreThanMillion = 0;
+        for(int n = 1; n <= 100; n ++)
+        {
+            for(int r = 0; r <= n; r ++)
+            {
+                if(nCr(n, r) >= 1000000)
+                    moreThanMillion ++;
+            }
+        }
+        
+        System.out.println(moreThanMillion);
+    }
+    
+    /**
+     * Required method for nCr below, and problem
+     * 52 above. Also just useful.
+     * @param n - the number we want to factorial
+     * @return factorial - n!
+     */
+    public static double factorial(int n)
+    {
+        double factorial = 1;
+        for(int i = n; i > 0; i --)
+        {
+            factorial *= i;
+        }
+        
+        return factorial;
+    }
+    
+    /**
+     * Required method for problem 53. Also
+     * just a useful method.
+     * @param n - the amount to choose from
+     * @param r - how much we want to choose
+     * @return nCr - how many ways we can pick
+     * r items from n.
+     */
+    public static double nCr(int n, int r)
+    {
+        if(n >= r && r >= 0)
+            return (factorial(n)/(factorial(r)*factorial(n - r)));
+        else
+            throw new IllegalArgumentException("r cannot be negative and must be less than or equal to n");
+    }
+    
     public static void main(String[] args)
     {
-        problem11();
+        problem53();
     }    
 }
