@@ -9,12 +9,89 @@ import java.util.Arrays;
  * quite been perfected yet. Feel free to look through the rubble, and even try to
  * fix broken problems if you want.
  */
-public class ProjectEulerTrash {
-	
-	/**
-	 * I think this should work but it's too slow. I should do it faster�maybe even mathematically.
+public class ProjectEulerTrash 
+{
+    
+    /**
+     * Method for problem 4. Self explanatory.
      * @author Simon Alford
      */
+    public static boolean isPalindrome(long n)
+    {
+    	ArrayList digits = new ArrayList((int)Math.log(n) + 1);
+	int i = 0;
+	while(n!= 0)
+	{
+            digits.add(n%10);
+            n/= 10;
+	}
+	while(digits.size() > 1)
+	{
+            if(digits.remove(0) != digits.remove(digits.size() - 1))
+		return false;
+	}
+        
+	return true;
+    }
+    
+    /**
+     * DARN IT!!! This should work, but the numbers are too big...
+     */
+    public static void problem55()
+    {
+        int count = 0;
+        for(int i = 1; i < 10000; i ++)
+        {
+            if(isLychrel(i))
+                count ++;
+        }
+        
+        System.out.println(count);
+    }
+    
+    public static boolean isLychrel(long number)
+    {
+        int iteration = 0;
+        while(iteration <= 50)
+        {
+            if(isPalindrome(number) && number != 196)
+                return false;
+            
+            if(number != 196)
+                number = reverseThis(number) + number;
+            
+            iteration ++;
+        }
+        return true;
+    }
+    
+    public static long reverseThis(long number)
+    {
+        int indexE;        
+        String stringNumber = number + "";        
+        String reverse = "";
+        int length = (number + "").length();
+        
+        if(stringNumber.contains("E"))
+            indexE = stringNumber.indexOf("E");
+        else
+            indexE = length - 1;
+        
+        for(int i = indexE; i >= 0; i --)
+        {
+            reverse += stringNumber.charAt(i);
+        }
+        
+        System.out.println(stringNumber);
+        long reversed = Long.parseLong(reverse);
+        
+        return reversed;
+    }
+    
+    /**
+    * I think this should work but it's too slow. I should do it faster�maybe even mathematically.
+    * @author Simon Alford
+    */
     public static void problem40()
     {
     	System.out.println("starting");
