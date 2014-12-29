@@ -1,6 +1,3 @@
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -12,7 +9,7 @@ import java.util.Arrays;
 public class ProjectEulerTrash {
 	
 	/**
-	 * I think this should work but it's too slow. I should do it faster—maybe even mathematically.
+	 * I think this should work but it's too slow. I should do it faster. maybe even mathematically.
      * @author Simon Alford
      */
     public static void problem40()
@@ -47,39 +44,60 @@ public class ProjectEulerTrash {
     
 	/**
 	 * @author Simon Alford
-	 * Still working on this.
+	 * Finds the number of ways to make 2 dollars with 2 dollar, 1 dollar, and 50, 25, 5, 2, and 1 cent coins.
+	 * I solved this problem recursively. I'm not sure if there's any other way to do it... It was definitely one
+	 * of the harder problems that I've solved (there were harder problems, but this one I actually solved by myself!!!).
 	 */
 	public static void problem31()
 	{
-		ArrayList<Integer> coins = new ArrayList<Integer>(Arrays.asList(1,2,5,10,20,50,100));
-		
-		int numOfWays = 1 + numOfWays(coins, 100); //auto count in the number of ways with the 2 pound coin;
+		ArrayList<Integer> coins = new ArrayList<Integer>(Arrays.asList(200, 100, 50, 25, 5, 2, 1));
+		System.out.println(numOfWays(coins, 200));
 	}
-	
+		
 	/**
-	 * Recursive method I'm working on for problem 30. It doesn't work yet.
+	 * Recursive method for problem 31. Given a list of the coins to use, and the sum to make,
+	 * gives the number of ways to make the sum with the coins. Goes recursively:
 	 * @author Simon Alford
-	 * @param coins
-	 * @param sum
-	 * @return number of ways to make the sum with the arraylist of coins.
+	 * @param coins - an ArrayList of the coins (in cents) available to use to make the sum.
+	 * @param sum - the number of cents being made.
+	 * @return number of ways to make the sum with the ArrayList of coins.
 	 */
 	public static int numOfWays(ArrayList<Integer> coins, int sum)
 	{
-		int numOfWays = 0;
-		ArrayList<Integer> hi = coins;
-		int i;
-		for(Integer temp: coins)
+		/* the base case of the recursive function. If there is only one coin, or no coins
+		 * then there is only one way to make that sum (only one way to make 5c with pennies.)
+		 * I'm pretty sure this only works because the lowest denomination is pennies, so 
+		 * any number of cents will always be able to be made.
+		 */
+		if(coins.size() < 2)
 		{
-			i = 1;
-			while(temp*i < sum)
-			{
-				numOfWays += numOfWays(hi, sum - temp*i);
-				i++;
-			}
+			//System.out.println("!");
+			return 1;
 		}
 		
-		return numOfWays;
-	}	
+		int numOfWays = 0;
+		
+		//copies the coins into a new ArrayList so that it can be modified without
+		//modifying the original ArrayList.
+		ArrayList<Integer> rest = new ArrayList<Integer>(coins.size());
+		rest.addAll(coins);
+		
+		//Go through each coin in the list, removing each one.
+		for(int i = 0; i < coins.size() - 1; i++)
+		{
+			int coin = rest.remove(0);
+			//go through each number of the coin. Ex. a list of 5, 2, and 1 cent, needing to make
+			//10cents, you can have num be 1 or 2 to make 10 cents.
+			for(int num = 1; num*coin <= sum; num++)
+			{
+				//System.out.println(rest.toString());
+				//System.out.println(sum - num*coin + ", " + num + "*" + coin);
+				numOfWays+= numOfWays(rest, sum - num*coin);
+			}
+		}
+		// ++ to account for the last coin that wasn't gone through.
+		return ++numOfWays;
+	}
 	
 	/**
      * @author Manu Singhal
@@ -93,7 +111,7 @@ public class ProjectEulerTrash {
      * number of factors to 500, and exit the loop.
      * 
      * This takes too long to give an answer in a reasonable amount of time.
-     * Or maybe it's just broken. -Simon
+     * - Simon
      * 
      * @return highlyDivisble - the smallest triangular
      * number that has over 500 factors
@@ -235,6 +253,6 @@ public class ProjectEulerTrash {
 	
 	public static void main(String[] args)
 	{
-		
+		problem31();
 	}
 }
