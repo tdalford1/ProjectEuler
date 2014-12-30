@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.math.*;
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  * Hi! This is the file that contains the solutions
@@ -1163,7 +1164,7 @@ public class ProjectEuler {
     
     /**
      * Required method for nCr below, and problem
-     * 52 above. Also just useful.
+     * 53 above. Also just useful.
      * @param n - the number we want to factorial
      * @return factorial - n!
      */
@@ -1192,6 +1193,726 @@ public class ProjectEuler {
             return (factorial(n)/(factorial(r)*factorial(n - r)));
         else
             throw new IllegalArgumentException("r cannot be negative and must be less than or equal to n");
+    }
+    
+    /**
+     * @author Manu Singhal
+     * 
+     * From a given set of poker hands, determine how
+     * many times Player 1 wins.
+     * 
+     * This took about two days to do, so not really a walk 
+     * in the park, but I got it done! I didn't really expect
+     * this to be this difficult or time-consuming, but it works.
+     * AND IT'S REALLY FAST!!! 
+     * 
+     * Remember that if your are trying to run this from your computer,
+     * then you will need to change the path to the poker.txt file, although
+     * when you pull this from GitHub, poker.txt will appear in your source
+     * folder, along with EasyReader
+     * 
+     * First, I used EasyReader to read from the poker.txt file.
+     * Using that information, I created each player's hand with 
+     * Cards (see separate class below). I then compared each player's
+     * hand to a rank using the several rank methods below.
+     * 
+     * @param pathToPoker - the path to the poker.txt file,
+     * changes for different users
+     */
+    public static void problem54(String pathToPoker)
+    {
+        // Create a new EasyReader object, this is used
+        // to read what is in the poker.txt file
+        EasyReader readIn = new EasyReader(pathToPoker);
+        
+        
+        int p1Win = 0;
+        
+        // The loop to go through all of the different hands
+        for(int i = 0; i < 1000; i ++)
+        {
+            // Secondary loop that will be broken eventually
+            // It makes no sense now, but it will later...
+            for(int j = 0; j < 1; j ++)
+            {
+                // get the cards in the hands
+                String hands = readIn.readLine();
+                
+                // seperate both hands
+                String play1Hand = hands.substring(0, 15);
+                String play2Hand = hands.substring(15) + " ";
+
+                ArrayList<Card> p1 = new ArrayList<>();
+                ArrayList<Card> p2 = new ArrayList<>();
+
+                // loop to intialize the different cards
+                for(int p = 0; p < 5; p ++)
+                {
+                    String card = play1Hand.substring(0, 2);
+                    String suit = card.substring(1); // this is the second part of the card
+                    int value;
+
+                    // essentially, if the first character isn't a number
+                    if(!Character.isDigit(card.charAt(0)))
+                    { // then it must be a letter
+                        String s = card.substring(0, 1);
+                        if(s.contains("A")) // ACE
+                            value = 14;
+                        else if(s.contains("K")) // KING
+                            value = 13;
+                        else if(s.contains("Q")) // QUEEN
+                            value = 12;
+                        else if(s.contains("J")) // JACK
+                            value = 11;
+                        else // TEN
+                            value = 10;
+                    }
+                    else // otherwise, it's just the number in front
+                        value = Integer.parseInt(card.substring(0,1));
+
+                    Card c;
+
+                    // this part actually makes the Card object
+                    if(suit.contains("D"))
+                        c = new Card(value, Suit.DIAMONDS);
+                    else if(suit.contains("S"))
+                        c = new Card(value, Suit.SPADES);
+                    else if(suit.contains("C"))
+                        c = new Card(value, Suit.CLUBS);
+                    else
+                        c = new Card(value, Suit.HEARTS);
+
+                    // these lines add the Card to player 1's hand
+                    // then cut out the recently added card from the String
+                    p1.add(c);
+                    play1Hand = play1Hand.substring(3);
+                }
+
+                // same as for Player 1 above
+                for(int p = 0; p < 5; p ++)
+                {
+                    String card = play2Hand.substring(0, 2);
+                    String suit = card.substring(1);
+                    int value;
+
+                    if(!Character.isDigit(card.charAt(0)))
+                    {
+                        String s = card.substring(0, 1);
+                        if(s.contains("A"))
+                            value = 14;
+                        else if(s.contains("K"))
+                            value = 13;
+                        else if(s.contains("Q"))
+                            value = 12;
+                        else if(s.contains("J"))
+                            value = 11;
+                        else
+                            value = 10;
+                    }
+                    else
+                        value = Integer.parseInt(card.substring(0,1));
+
+                    Card c;
+
+                    if(suit.contains("D"))
+                        c = new Card(value, Suit.DIAMONDS);
+                    else if(suit.contains("S"))
+                        c = new Card(value, Suit.SPADES);
+                    else if(suit.contains("C"))
+                        c = new Card(value, Suit.CLUBS);
+                    else
+                        c = new Card(value, Suit.HEARTS);
+
+                    p2.add(c);
+                    play2Hand = play2Hand.substring(3);
+                }
+
+                //System.out.println(i); Was for debugging purposes
+                
+                // these hold the values (true/false) or the value 
+                // of pairs, etc.
+                // these make use of the several methods below
+                boolean p1RF = royalFlush(p1);
+                boolean p1SF = straightFlush(p1);
+                int p1Four = fourOfAKind(p1);
+                int[] p1FH = fullHouse(p1);
+                boolean p1Flush = flush(p1);
+                boolean p1Straight = straight(p1);
+                int p1Three = threeOfAKind(p1);
+                int[] p1TwoPair = twoPair(p1);
+                int p1OnePair = onePair(p1);
+                int p1Highest = highest(p1);
+
+                boolean p2RF = royalFlush(p2);
+                boolean p2SF = straightFlush(p2);
+                int p2Four = fourOfAKind(p2);
+                int[] p2FH = fullHouse(p2);
+                boolean p2Flush = flush(p2);
+                boolean p2Straight = straight(p2);
+                int p2Three = threeOfAKind(p2);
+                int[] p2TwoPair = twoPair(p2);
+                int p2OnePair = onePair(p2);
+                int p2Highest = highest(p2);
+
+                /* 
+                the winning (and losing) conditions for Player 1
+                the basic pattern is check for p1 winning, otherwise
+                check for p2 winning that scenario, add one (or don't)
+                to p1's win total, then exit the loop
+                BUT WHICH LOOP??? This is the purpose of the
+                extra loop that cycles once, so that the program
+                has a loop to break that isn't the big loop that loops 1000 times
+                */
+                
+                // if p1 has a Royal Flush and p2 doesn't...
+                if(p1RF && !p2RF)
+                { 
+                    p1Win ++; break; // tally for p1 and exit the loop
+                }
+                // otherwise check if p2 wins, then break if needed
+                else if(!p1RF && p2RF) { break; } 
+
+                if(p1SF && !p2SF)
+                {
+                    p1Win ++; break;
+                }
+                else if(!p1SF && p2SF) { break; }
+
+                if(p1Four > p2Four)
+                {
+                    p1Win ++; break;
+                }
+                else if(p1Four < p2Four) { break; }
+
+                if(p1FH[1] < p2FH[1]) { break; }
+                else if(p1FH[1] > p2FH[1])
+                {
+                    p1Win ++; break;
+                }
+
+                if(p1Flush && !p2Flush)
+                {
+                    p1Win ++; break;
+                }
+                else if(!p1Flush && p2Flush) { break; }
+
+                if(p1Straight && !p2Straight)
+                {
+                    p1Win ++; break;
+                }
+                else if(!p1Straight && p2Straight) { break; }
+
+                if(p1Three > p2Three)
+                {
+                    p1Win ++; break;
+                }
+                else if(p1Three < p2Three) {}
+
+                if((p1TwoPair[0] > p2TwoPair[0] && p1TwoPair[0] > p2TwoPair[1]) || (p1TwoPair[1] > p2TwoPair[0] &&
+                        p1TwoPair[1] > p2TwoPair[1]))
+                {
+                    p1Win ++; break;
+                }
+                else if((p2TwoPair[0] > p1TwoPair[0] && p2TwoPair[0] > p1TwoPair[1]) || (p2TwoPair[1] > p1TwoPair[0] &&
+                        p2TwoPair[1] > p1TwoPair[1])) { break; }
+
+                if(p1OnePair > p2OnePair)
+                {
+                    p1Win ++; break;
+                }
+                else if(p1OnePair < p2OnePair) { break; }
+
+                if(p1Highest > p2Highest)
+                {
+                    p1Win ++; break;
+                }
+                else if(p1Highest < p2Highest) { break; }
+            } 
+        } // exit 1000 loop
+        
+        // print out the number of times p1 won
+        System.out.println(p1Win);
+    }
+    
+    /**
+     * @author Manu S.
+     * 
+     * Looks through a hand to find a certain value.
+     * Needed for problem 54. This is a good example
+     * simple sifter program.
+     * 
+     * @param hand - the hand of cards to look through
+     * @param value - the value to look for
+     * @return true - if the value is in hand, false otherwise
+     */
+    public static boolean hasThisValue(ArrayList<Card> hand, int value)
+    {
+        for(Card c: hand)
+        {
+            if(c.number == value)
+                return true;
+        }
+        
+        return false;
+    }
+    
+    /**
+     * @author Manu S.
+     * 
+     * Finds the number of suits in a given hand. Needed for problem
+     * 54. This is similar to the method above, but instead of looking
+     * for something specific, this is counting the number of suits
+     * 
+     * @param hand - the hand to look through
+     * @return numSuits - the number of suits in hand
+     */
+    public static int numberOfSuits(ArrayList<Card> hand)
+    {
+        int numSuits = 0;
+        // stores the Suits that we found
+        ArrayList<Suit> found = new ArrayList();
+        for(Card c : hand)
+        {
+            // if this suit isn't in there...
+            if(!found.contains(c.suit))
+            {
+                // add one to the suits
+                numSuits ++;
+                // and add it to the array
+                found.add(c.suit);
+            }
+        }
+        
+        return numSuits;
+    }
+    
+    /**
+     * @author Manu S.
+     * 
+     * The number of different values found in the 
+     * given hand. Needed for problem 54. Essentially
+     * the same thing as above, but with values
+     * 
+     * @param hand - the set of Cards to look through
+     * @return numValues - the number of different values 
+     * in the hand
+     */
+    public static int numberOfValues(ArrayList<Card> hand)
+    {
+        int numValues = 0;
+        ArrayList found = new ArrayList();
+        for(Card c : hand)
+        {
+            if(!found.contains(c.number))
+            {
+                numValues ++;
+                found.add(c.number);
+            }
+        }
+        
+        return numValues;
+    }
+    
+    /**
+     * @author Manu S.
+     * 
+     * Checks to see if the hand has a Royal Flush. Needed 
+     * for problem 54.
+     * Pretty simple, if the hand doesn't have a 10, jack, 
+     * queen, king, or ace, then the whole thing is false.
+     * If it does, then they must be of the same suit (flush)
+     * 
+     * @param hand - the hand to analyze
+     * @return true - if the hand contains an ace, king, queen,
+     * jack, and ten of the same suit.
+     */
+    public static boolean royalFlush(ArrayList<Card> hand)
+    {
+        if(!hasThisValue(hand, 10) || !hasThisValue(hand, 11) || !hasThisValue(hand, 12) ||
+                hasThisValue(hand, 13) || !hasThisValue(hand, 14))
+            return false;
+        else
+            return flush(hand);
+    }
+    
+    /**
+     * @author Manu S.
+     * 
+     * Checks if the hand has a Straight Flush. Needed for
+     * problem 54. 
+     * Really simple, true if the hand is a straight and flush,
+     * so a simple logic statement will suffice
+     * 
+     * @param hand - the hand to analyze
+     * @return true - if the hand has 5 consecutive cards 
+     * in the same suit, false otherwise
+     */
+    public static boolean straightFlush(ArrayList<Card> hand)
+    {
+        return straight(hand) && flush(hand);
+    }
+    
+    /**
+     * @author Manu S.
+     * 
+     * Checks to see if the hand has a Four Of A Kind. Needed
+     * for problem 54.
+     * A bit more complex than the previous methods, read the
+     * comments below for good detail
+     * 
+     * @param hand - the hand to analyze
+     * @return int - the value of the four cards
+     */
+    public static int fourOfAKind(ArrayList<Card> hand)
+    {
+        // a hand with more than 3 values, can't have 4 of a kind...
+        if(numberOfValues(hand) != 2)
+            return -1;
+        else
+        {
+            // Why CopyOnWriteArrayList, you might ask? When I
+            // tried to do this with just an ArrayList, the compiler
+            // gave me an ConcurrentModificationException
+            // WHAT IN THE WORLD DOES THAT MEAN???
+            
+            // I googled the problem, and StackOverflow suggested to use
+            // this CopyOnWriteArrayList, and it works, so I'm not complaining
+            CopyOnWriteArrayList<Integer> temp = new CopyOnWriteArrayList();
+            for(Card c : hand)
+            {
+                temp.add(c.number);
+            }
+            
+            // this is the 
+            int numCompare = temp.remove(0);
+            int numDifferent = 0;
+            for(int f : temp)
+            {
+                if(f != numCompare && numDifferent < 1)
+                    numDifferent ++;
+                else if(f != numCompare && numDifferent >= 1)
+                    return -1;
+                else if(f == numCompare)
+                    temp.remove(new Integer(f));
+            }
+            
+            return numCompare;
+        }
+    }
+    
+    /**
+     * @author Manu S.
+     * 
+     * Checks to see if the hand has a Full House. Needed
+     * for problem 54. Really easy, use both pair and three
+     * to find the values
+     * 
+     * @param hand - the hand to analyze
+     * @return int[] - the array that contains the value
+     * of the pair, then the value of the triple
+     * null - if the hand doesn't have a full house.
+     */
+    public static int[] fullHouse(ArrayList<Card> hand)
+    {
+        int pair = onePair(hand);
+        int three = threeOfAKind(hand);
+        
+        // basically, this prevents the pair and three
+        // from counting twice
+        if(numberOfValues(hand) == 2)
+            return new int[] {pair, three};
+        else
+            return new int[] {-1, -1};
+    }
+    
+    /**
+     * @author Manu S.
+     * 
+     * Checks to see if the hand has a Flush. Needed for
+     * problem 54. A Flush must have all the same suit, so
+     * numberOfSuits works very well for this
+     * 
+     * @param hand - the hand to analyze
+     * @return true - if all the cards are of the same suit
+     */
+    public static boolean flush(ArrayList<Card> hand)
+    {
+        return numberOfSuits(hand) == 1;
+    }
+    
+    /**
+     * @author Manu S.
+     * 
+     * Checks to see if the set of cards has a Straight.
+     * Needed for problem 54. This was kinda fun, and easier
+     * than I expected.
+     * 
+     * @param hand - the set of cards to analyze
+     * @return true - if the hand has 5 consecutive cards 
+     * (2,3,4,5,6)
+     */
+    public static boolean straight(ArrayList<Card> hand)
+    {
+        // find the smallest value in the hand
+        int smallestValue = 14;
+        for(Card c : hand)
+        {
+            if(smallestValue > c.number)
+                smallestValue = c.number;
+        }
+        
+        // create HYPOTHETICAL true values for the straight
+        int[] trueValues = {smallestValue, smallestValue + 1, smallestValue + 2, smallestValue + 3, smallestValue + 4};
+        
+        // check to see if the hand has all of
+        // the hypothetical values; if it does
+        // then it is a straight
+        for(int value : trueValues)
+        {
+            if(hasThisValue(hand, value))
+                continue; // I didn'tt need this, but I like continue
+            else
+                return false;
+        }
+        
+        return true;
+    }
+    
+    /**
+     * @author Manu S.
+     * 
+     * Checks to see if the hand has a Three Of A Kind.
+     * Needed for problem 54. This method is strikingly
+     * similar to the onePair method, just with different
+     * restrictions on numDifferent
+     * 
+     * @param hand- the set of cards to be analyzed
+     * @return int - the value of the triple
+     */
+    public static int threeOfAKind(ArrayList<Card> hand)
+    {
+        int currentIndex = 0;
+        int numDifferent = 0;
+        while(numDifferent != 2)
+        {
+            Card compare = hand.get(0);
+            for(Card c : hand)
+            {
+                if(c.number != compare.number)
+                    numDifferent ++;
+            }
+            
+            if(numDifferent == 2) {
+            } else
+            {
+                if(currentIndex <= 4)
+                    currentIndex ++;
+                else
+                    return -1;
+                numDifferent = 0;
+            }
+        }
+        
+        return hand.get(currentIndex).number;
+    }
+    
+    /**
+     * @author Manu S.
+     * 
+     * Checks to see if the hand has a Two Pair. Needed 
+     * for problem 54. Pretty similar to the onePair
+     * method, but with some changes
+     * 
+     * @param hand - the set of cards to analyze
+     * @return pairs - the values of the two pairs
+     */
+    public static int[] twoPair(ArrayList<Card> hand)
+    {
+        int[] pairs; // this will hold the values
+        // of the pairs, if they're there
+        
+        // this is essentially the same thing, but
+        // with integers and something I can 
+        // change without screwing everything up
+        ArrayList<Integer> temp = new ArrayList();
+        
+        for(Card c: hand)
+        {
+            temp.add(c.number);
+        }
+        
+        // find the value first pair
+        int compare1 = onePair(hand);
+        
+        // get rid of the pair
+        temp.remove(new Integer(compare1));
+        temp.remove(new Integer(compare1));
+        
+        // find the second pair using the smaller
+        // ArrayList
+        int compare2 = onePairInt(temp);
+        
+        // basically, if the second one isn't there,
+        // then it doesn't matter if there is only one pair,
+        // return false (-1 for ints) anyway
+        if(compare2 != -1) 
+            pairs = new int[] {compare1, compare2};
+        else
+            pairs = new int[] {-1, -1};
+        
+        return pairs;
+    }
+    
+    /**
+     * @author Manu S.
+     * 
+     * Checks to see if the hand has a Pair.
+     * Needed method for problem 54.
+     * 
+     * The basic way it works is by analyzing the hand
+     * to see which card only has 3 that are different from it,
+     * that one must be the pair
+     * 
+     * @param hand - the hand to be analyzed
+     * @return int - the value of the pair
+     * -1 - if there is no pair
+     */
+    public static int onePair(ArrayList<Card> hand)
+    {
+        // this is the card that may be a paired card
+        int currentIndex = 0; 
+        // this is the number of cards that are different
+        // than the one above
+        int numDifferent = 0;
+        
+        // essentially, while we haven't found the card...
+        while(numDifferent != 3)
+        {
+            // take the card that we are looking at
+            Card compare = hand.get(currentIndex);
+            for(Card c : hand)
+            {
+                // and compare it to every card in the hand
+                if(c.number != compare.number)
+                    numDifferent ++;
+            }
+            
+            // if we found it...
+            if(numDifferent == 3) 
+            {
+                // do nothing, the loop will exit
+                // on its own
+            } 
+            else // otherwise...
+            {
+                // if we haven't checked every Card...
+                if(currentIndex < 4)
+                    currentIndex ++; // move on to the next one
+                else // otherwise, we'll never find it
+                    return -1;
+                
+                numDifferent = 0; // reset numDifferent
+            }
+        }
+        
+        // if we found it, then return the pair's VALUE
+        return hand.get(currentIndex).number;
+    }
+    
+    /**
+     * @author Manu S.
+     * 
+     * An alternative method for the one above, just
+     * uses ints instead of Cards.
+     * Needed for problem 54.
+     * 
+     * @param cards - the set of cards to analyze
+     * @return int - the value of the pair
+     * -1 - if the pair doesn't exist
+     */
+    public static int onePairInt(ArrayList<Integer> cards)
+    {
+        int currentIndex = 0;
+        int numDifferent = 0;
+        while(numDifferent != 1)
+        {
+            int compare = cards.get(currentIndex);
+            for(int c : cards)
+            {
+                if(c != compare)
+                    numDifferent ++;
+            }
+            
+            if(numDifferent == 1) {
+            } else
+            {
+                if(currentIndex < 2)
+                    currentIndex ++;
+                else
+                    return -1;
+                numDifferent = 0;
+            }
+        }
+        
+        return cards.get(currentIndex);
+        
+        /* Now I'll admit, I cheated a little by changing the bounds on
+           numDifferent and currentIndex because I knew that the only time
+           this method was going be used was in the twoPair method after 
+           two of the cards had been removed. But it works, so yeah...
+         */
+    }
+    
+    /**
+     * @author Manu S.
+     * 
+     * Simply returns the highest card value in the 
+     * given hand. Needed for problem 54. Pretty simple
+     * sifter program.
+     * 
+     * @param hand - the hand to analyze
+     * @return highest - the value of the highest valued card
+     * in the hand
+     */
+    public static int highest(ArrayList<Card> hand)
+    {
+        int highest = 0;
+        for(Card c : hand)
+        {
+            if(c.number > highest)
+                highest = c.number;
+        }
+        
+        return highest;
+    }
+    
+    /**
+     * @author Manu S.
+     * 
+     * Simple enum used to clean up the code.
+     */
+    static enum Suit
+    {
+        DIAMONDS, HEARTS, CLUBS, SPADES
+    }
+    
+    /**
+     * @author Manu S.
+     * The heart of it all: stores the value and suit of a card.
+     * I've always wanted to try this, and I'm pretty glad that 
+     * it worked so well.
+     */
+    static class Card
+    {
+        public int number;
+        public Suit suit;
+        
+        public Card(int num, Suit s)
+        {
+            number = num;
+            suit = s;
+        }
+        
     }
     
     public static void problem69()
@@ -1236,6 +1957,6 @@ public class ProjectEuler {
     
     public static void main(String[] args)
     {
-        problem69();
+        problem54("/C:/Users/singhalmanu9/Documents/NetBeansProjects/ProjectEuler/src/poker.txt");
     }    
 }
