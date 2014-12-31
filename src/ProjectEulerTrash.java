@@ -13,6 +13,55 @@ public class ProjectEulerTrash
 {
     
     /**
+     * @author Manu S.
+     * 
+     * Find the largest ratio of an integer n to the
+     * number of relatively prime numbers that are less than
+     * n, where n has a maximum value of 1000000.
+     * 
+     * Easy problem to write, but a pain to wait for.
+     */
+    public static void problem69()
+    {
+        int biggestN = 6;
+        double smallestValue = 3;
+        for(int i = 2; i <= 1000000; i ++)
+        {
+            System.out.println(i);
+            double value = (double) i / totient(i);
+            if(value > smallestValue)
+                biggestN = i;
+        }
+        
+        System.out.println(biggestN);
+    }
+    
+    public static int lcm(int a, int b)
+    {
+        int lcm = a * b;
+        for(int m = 1; m < b; m ++)
+        {
+            int product = a * m;
+            if(product % b == 0 && product < lcm)
+                lcm = product;
+        }
+        
+        return lcm;
+    }
+    
+    public static int totient(int n)
+    {
+        int relativePrime = 1;
+        for(int i = 2; i < n; i ++)
+        {
+            if(lcm(i, n) <= i * n)
+                relativePrime ++;
+        }
+        
+        return relativePrime;
+    }
+    
+    /**
      * Method for problem 4. Self explanatory.
      * @author Simon Alford
      */
