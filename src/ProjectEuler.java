@@ -43,10 +43,10 @@ import java.util.concurrent.CopyOnWriteArrayList;
  *
  * Problems completed:
  *  1, 2, 4, 6, 7, 8, 10, 11, 12*, 13, 14, 16, 19, 20, 21, 22, 23, 25, 26, 27, 28, 29, 30,
- *  36, 40*, 52, 53
+ *  36, 40*, 52, 53, 54, 69*
  *  
  * (Problems with * are solved, but are very slow to execute)
- *  As always, contact Manu Singhal
+ * As always, contact Manu Singhal
  * (singhalmanu9 on GitHub) or visit the GitHub repository
  * (www.github.com/DCHSProgrammingClub/ProjectEuler) if you have
  * any questions, comments, or concerns. Thanks!
