@@ -1915,46 +1915,6 @@ public class ProjectEuler {
         
     }
     
-    public static void problem69()
-    {
-        int biggestN = 6;
-        double smallestValue = 3;
-        for(int i = 2; i <= 1000000; i ++)
-        {
-            System.out.println(i);
-            double value = i / totient(i);
-            if(value > smallestValue)
-                biggestN = i;
-        }
-        
-        System.out.println(biggestN);
-    }
-    
-    public static int lcm(int a, int b)
-    {
-        int lcm = a * b;
-        for(int m = 1; m < b; m ++)
-        {
-            int product = a * m;
-            if(product % b == 0 && product < lcm)
-                lcm = product;
-        }
-        
-        return lcm;
-    }
-    
-    public static int totient(int n)
-    {
-        int relativePrime = 1;
-        for(int i = 2; i < n; i ++)
-        {
-            if(lcm(i, n) <= i * n)
-                relativePrime ++;
-        }
-        
-        return relativePrime;
-    }
-    
     public static void main(String[] args)
     {
         problem54("/C:/Users/singhalmanu9/Documents/NetBeansProjects/ProjectEuler/src/poker.txt");
