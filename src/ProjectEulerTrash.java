@@ -6,12 +6,138 @@ import java.util.Arrays;
  * quite been perfected yet. Feel free to look through the rubble, and even try to
  * fix broken problems if you want.
  */
-public class ProjectEulerTrash {
-	
-	/**
-	 * I think this should work but it's too slow. I should do it faster. maybe even mathematically.
+public class ProjectEulerTrash 
+{
+    
+    /**
+     * @author Manu S.
+     * 
+     * Find the largest ratio of an integer n to the
+     * number of relatively prime numbers that are less than
+     * n, where n has a maximum value of 1000000.
+     * 
+     * Easy problem to write, but a pain to wait for.
+     */
+    public static void problem69()
+    {
+        int biggestN = 6;
+        double smallestValue = 3;
+        for(int i = 2; i <= 1000000; i ++)
+        {
+            System.out.println(i);
+            double value = i / totient(i);
+            if(value > smallestValue)
+                biggestN = i;
+        }
+        
+        System.out.println(biggestN);
+    }
+    
+    public static int lcm(int a, int b)
+    {
+        int lcm = a * b;
+        for(int m = 1; m < b; m ++)
+        {
+            int product = a * m;
+            if(product % b == 0 && product < lcm)
+                lcm = product;
+        }
+        
+        return lcm;
+    }
+    
+    public static int totient(int n)
+    {
+        int relativePrime = 1;
+        for(int i = 2; i < n; i ++)
+        {
+            if(lcm(i, n) <= i * n)
+                relativePrime ++;
+        }
+        
+        return relativePrime;
+    }
+    
+    /**
+     * Method for problem 4. Self explanatory.
      * @author Simon Alford
      */
+    public static boolean isPalindrome(long n)
+    {
+    	ArrayList digits = new ArrayList((int)Math.log(n) + 1);
+	int i = 0;
+	while(n!= 0)
+	{
+            digits.add(n%10);
+            n/= 10;
+	}
+	while(digits.size() > 1)
+	{
+            if(digits.remove(0) != digits.remove(digits.size() - 1))
+		return false;
+	}
+        
+	return true;
+    }
+    
+    /**
+     * DARN IT!!! This should work, but the numbers are too big...
+     */
+    public static void problem55()
+    {
+        int count = 0;
+        for(int i = 1; i < 10000; i ++)
+        {
+            if(isLychrel(i))
+                count ++;
+        }
+        
+        System.out.println(count);
+    }
+    
+    public static boolean isLychrel(long number)
+    {
+        int iteration = 0;
+        while(iteration <= 50)
+        {
+            if(isPalindrome(number) && number != 196)
+                return false;
+            
+            if(number != 196)
+                number = reverseThis(number) + number;
+            
+            iteration ++;
+        }
+        return true;
+    }
+    
+    public static long reverseThis(long number)
+    {
+        int indexE;        
+        String stringNumber = number + "";        
+        String reverse = "";
+        int length = (number + "").length();
+        
+        if(stringNumber.contains("E"))
+            indexE = stringNumber.indexOf("E");
+        else
+            indexE = length - 1;
+        
+        for(int i = indexE; i >= 0; i --)
+        {
+            reverse += stringNumber.charAt(i);
+        }
+        
+        System.out.println(stringNumber);
+        long reversed = Long.parseLong(reverse);
+        
+        return reversed;
+    }
+    
+    /**
+    * I think this should work but it's too slow. I should do it faster�maybe even mathematically.
+    * @author Simon Alford
+    */
     public static void problem40()
     {
     	System.out.println("starting");
@@ -41,8 +167,44 @@ public class ProjectEulerTrash {
         System.out.println((int) (Math.pow(2, 10) * Math.pow(3, 6) * Math.pow(4, 5) * Math.pow(5, 4) * Math.pow(6, 3)
         		* Math.pow(7, 2) * Math.pow(8, 2) * Math.pow(9, 2) * 100 * 11 * 12 * 13 *14 * 15 * 16 * 17 * 18 * 19 * 20));
     }
+    
+	/**
+	 * @author Simon Alford
+	 * Still working on this.
+	 */
+	public static void problem31()
+	{
+		ArrayList<Integer> coins = new ArrayList<Integer>(Arrays.asList(1,2,5,10,20,50,100));
+		
+		int numOfWays = 1 + numOfWays(coins, 100); //auto count in the number of ways with the 2 pound coin;
+	}
 	
 	/**
+	 * Recursive method I'm working on for problem 30. It doesn't work yet.
+	 * @author Simon Alford
+	 * @param coins
+	 * @param sum
+	 * @return number of ways to make the sum with the arraylist of coins.
+	 */
+	public static int numOfWays(ArrayList<Integer> coins, int sum)
+	{
+		int numOfWays = 0;
+		ArrayList<Integer> hi = coins;
+		int i;
+		for(Integer temp: coins)
+		{
+			i = 1;
+			while(temp*i < sum)
+			{
+				numOfWays += numOfWays(hi, sum - temp*i);
+				i++;
+			}
+		}
+		
+		return numOfWays;
+	}	
+	
+    /**
      * @author Manu Singhal
      * Find the smallest triangular number
      * that has over 500 factors. 
@@ -54,7 +216,7 @@ public class ProjectEulerTrash {
      * number of factors to 500, and exit the loop.
      * 
      * This takes too long to give an answer in a reasonable amount of time.
-     * - Simon
+     * Or maybe it's just broken. -Simon
      * 
      * @return highlyDivisble - the smallest triangular
      * number that has over 500 factors
@@ -63,12 +225,10 @@ public class ProjectEulerTrash {
     {
         boolean foundIt = false;
         int highlyDivisible = 0;
-        int iteration = 1;
+        int iteration = 500;
         while(!foundIt)
         {
-            int triNum = 0;
-            for(int i = 0; i <= iteration; i ++)
-                triNum += i;
+            int triNum = iteration * (iteration + 1) / 2;
             
             if(factorMe(triNum) > 500)
             {
@@ -83,6 +243,8 @@ public class ProjectEulerTrash {
     /**
      * @author Manu Singhal
      * Used for problem 12 above.
+     * @return numFactors - the number of factors
+     * this thing has
      */
     public static int factorMe(int i)
     {
@@ -196,6 +358,6 @@ public class ProjectEulerTrash {
 	
 	public static void main(String[] args)
 	{
-		
+            System.out.println(problem12());
 	}
 }
