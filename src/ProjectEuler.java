@@ -98,6 +98,39 @@ public class ProjectEuler {
     }
     
     /**
+     * I made this super fast to test making changes using Eclipse and Github.
+     * I know it's really messy and inefficient. Sorry not sorry. I just hope making changes works.
+     * @author Simon Alford
+     */
+    public static void problem3()
+    {
+    	//The prime factors of 13195 are 5, 7, 13 and 29.
+
+    	//What is the largest prime factor of the number 600851475143 ?
+    	
+    	long n = 600851475143L;
+    	ArrayList<Integer> pFactors = new ArrayList<Integer>();
+    	int[] primes = eSieve(1000000);
+    	int d = 0;
+    	while(n > primes[d++])
+    	{
+    		if(n % primes[d] == 0){
+    			pFactors.add(primes[d]);
+    			n/=primes[d];
+    		}
+    	}
+    	
+    	int max = 0;
+    	for(int temp: pFactors)
+    	{
+    		if(temp > max)
+    			max = temp;
+    	}
+    	System.out.println(max);
+    	
+    }
+    
+    /**
      * Problem 4. self explanatory, I think.
      * @author Simon Alford
      */
@@ -1917,6 +1950,6 @@ public class ProjectEuler {
     
     public static void main(String[] args)
     {
-        problem54("/C:/Users/singhalmanu9/Documents/NetBeansProjects/ProjectEuler/src/poker.txt");
+        problem3();
     }    
 }
